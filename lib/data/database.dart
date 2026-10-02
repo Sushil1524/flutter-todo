@@ -20,7 +20,7 @@ class ToDoDatabase {
     toDoLists = _myDb.get("TODOLISTS");
   }
 
-  void saveData() {
+  void updateData() {
     _myDb.put("TODOLISTS", toDoLists);
   }
 }

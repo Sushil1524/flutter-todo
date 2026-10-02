@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       db.toDoLists[index][1] = !db.toDoLists[index][1];
     });
+    db.updateData();
   }
 
   void saveNewTask() {
@@ -57,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
       titleController.clear();
       descController.clear();
     });
+    db.updateData();
     Navigator.of(context).pop();
   }
 
@@ -79,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       db.toDoLists.removeAt(index);
     });
+    db.updateData();
   }
 
   @override
@@ -103,23 +106,52 @@ class _HomeScreenState extends State<HomeScreen> {
       //     ),
       //   ],
       // ),
-      body: ListView.builder(
-        itemCount: db.toDoLists.length,
-        itemBuilder: (context, index) {
-          return TodoTask(
-            taskName: db.toDoLists[index][0],
-            isCompleted: db.toDoLists[index][1],
-            taskNotes: db.toDoLists[index][2],
-            addedDate: db.toDoLists[index][3],
-            onChanged: (value) {
-              checkBoxChanged(value, index);
-            },
-            deleteTask: (context) {
-              deleteTaskController(index);
-            },
-          );
-        },
-      ),
+      // body: ListView.builder(
+      //   itemCount: db.toDoLists.length,
+      //   itemBuilder: (context, index) {
+      //     return TodoTask(
+      //       taskName: db.toDoLists[index][0],
+      //       isCompleted: db.toDoLists[index][1],
+      //       taskNotes: db.toDoLists[index][2],
+      //       addedDate: db.toDoLists[index][3],
+      //       onChanged: (value) {
+      //         checkBoxChanged(value, index);
+      //       },
+      //       deleteTask: (context) {
+      //         deleteTaskController(index);
+      //       },
+      //     );
+      //   },
+      // ),
+      body: db.toDoLists.isEmpty
+          ? Center(
+              child: SizedBox(
+                height: 350,
+                width: 500,
+                child: Text(
+                  "No tasks available. \nClick the + button to add a new task.",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: db.toDoLists.length,
+              itemBuilder: (context, index) {
+                return TodoTask(
+                  taskName: db.toDoLists[index][0],
+                  isCompleted: db.toDoLists[index][1],
+                  taskNotes: db.toDoLists[index][2],
+                  addedDate: db.toDoLists[index][3],
+                  onChanged: (value) {
+                    checkBoxChanged(value, index);
+                  },
+                  deleteTask: (context) {
+                    deleteTaskController(index);
+                  },
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigator.pushNamed(context, '/createtask');
