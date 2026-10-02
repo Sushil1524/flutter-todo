@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive_flutter/hive.dart';
+import 'package:hive/hive.dart';
 import 'package:todo/components/todo_task.dart';
 import 'package:todo/components/dialogue_box.dart';
+import 'package:todo/data/database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,22 +13,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _myDb = Hive.box('myDb');
+  ToDoDatabase db = ToDoDatabase();
+
+  @override
+  void initState() {
+    if (_myDb.get("TODOLISTS") == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
   final titleController = TextEditingController();
   final descController = TextEditingController();
 
-  final _myDb = Hive.openBox('myDb');
-
-  List toDoLists = [
-    ["testing", true, "", DateTime.now()],
-    ["Flutter", false, "", DateTime.now()],
-    ["Dart", false, "", DateTime.now()],
-    ["Firebase", false, "", DateTime.now()],
-  ];
+  // List toDoLists = [
+  //   ["testing", true, "", DateTime.now()],
+  //   ["Flutter", false, "", DateTime.now()],
+  //   ["Dart", false, "", DateTime.now()],
+  //   ["Firebase", false, "", DateTime.now()],
+  // ];
 
   void checkBoxChanged(bool? value, int index) {
     if (value == null) return;
     setState(() {
-      toDoLists[index][1] = !toDoLists[index][1];
+      db.toDoLists[index][1] = !db.toDoLists[index][1];
     });
   }
 
@@ -36,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //   return;
     // }
     setState(() {
-      toDoLists.add([
+      db.toDoLists.add([
         titleController.text,
         false,
         descController.text,
@@ -65,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void deleteTaskController(int index) {
     setState(() {
-      toDoLists.removeAt(index);
+      db.toDoLists.removeAt(index);
     });
   }
 
@@ -84,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //       taskName: "Sample Task",
       //       isCompleted: false,
       //       taskNotes: "This is a sample task.",
-      //       dueDate: DateTime.now(),
+      //       addedDate: DateTime.now(),
       //       onChanged: () {
       //         // Handle checkbox state change
       //       },
@@ -92,13 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
       //   ],
       // ),
       body: ListView.builder(
-        itemCount: toDoLists.length,
+        itemCount: db.toDoLists.length,
         itemBuilder: (context, index) {
           return TodoTask(
-            taskName: toDoLists[index][0],
-            isCompleted: toDoLists[index][1],
-            taskNotes: "This is task ${index + 1}.",
-            dueDate: toDoLists[index][3],
+            taskName: db.toDoLists[index][0],
+            isCompleted: db.toDoLists[index][1],
+            taskNotes: db.toDoLists[index][2],
+            addedDate: db.toDoLists[index][3],
             onChanged: (value) {
               checkBoxChanged(value, index);
             },

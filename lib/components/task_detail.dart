@@ -7,14 +7,14 @@ class TaskDetail extends StatelessWidget {
   final String taskName;
   final bool isCompleted;
   final String taskNotes;
-  final DateTime dueDate;
+  final DateTime addedDate;
 
   const TaskDetail({
     super.key,
     required this.taskName,
     required this.isCompleted,
     required this.taskNotes,
-    required this.dueDate,
+    required this.addedDate,
   });
 
   @override
@@ -45,7 +45,7 @@ class TaskDetail extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 15),
             ),
             Text(
-              "Due Date:\n ${dueDate.toString().split(' ')[0]}",
+              "Added Date:\n ${addedDate.toString().split(' ')[0]}",
               style: TextStyle(color: Colors.white, fontSize: 15),
             ),
             Row(

@@ -36,8 +36,10 @@ class NewTask extends StatelessWidget {
             ),
             TextField(
               controller: titleController,
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: "Enter your task",
+                hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusColor: Colors.white,
@@ -46,10 +48,12 @@ class NewTask extends StatelessWidget {
             ),
             TextFormField(
               controller: descController,
+              style: const TextStyle(color: Colors.white),
               minLines: 6,
               maxLines: 12,
               decoration: InputDecoration(
                 hintText: "Enter Description",
+                hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 focusColor: Colors.black,

@@ -5,7 +5,7 @@ class TodoTask extends StatelessWidget {
   final String taskName;
   final bool isCompleted;
   final String taskNotes;
-  final DateTime dueDate;
+  final DateTime addedDate;
 
   final Function(BuildContext)? deleteTask;
   final Function(bool?)? onChanged;
@@ -18,7 +18,7 @@ class TodoTask extends StatelessWidget {
           taskName: taskName,
           isCompleted: isCompleted,
           taskNotes: taskNotes,
-          dueDate: dueDate,
+          addedDate: addedDate,
         );
       },
     );
@@ -29,7 +29,7 @@ class TodoTask extends StatelessWidget {
     required this.taskName,
     required this.isCompleted,
     required this.taskNotes,
-    required this.dueDate,
+    required this.addedDate,
     required this.deleteTask,
     required this.onChanged,
   });

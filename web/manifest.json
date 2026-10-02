@@ -1,6 +1,6 @@
 {
-    "name": "ledgerapp",
-    "short_name": "ledgerapp",
+    "name": "Flutter-ToDo",
+    "short_name": "Flutter-ToDo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
